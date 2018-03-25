@@ -1,0 +1,41 @@
+{
+  "name": "@switch-company/fetchy",
+  "version": "0.0.0",
+  "description": "Wrap the Fetch API with convinience methods.",
+  "main": "dist/fetch.js",
+  "module": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "rollup -c && rollup -c rollup.config.minified.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "npm run test && npm run build && git add -A dist",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Switch-Company/fetchy.git"
+  },
+  "author": {
+    "name": "Switch",
+    "email": "bonjour@switch.paris",
+    "url": "http://switch.paris"
+  },
+  "license": "ISC",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "IE 10"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-idiomatic": "^4.0.0",
+    "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-uglify": "^3.0.0"
+  }
+}
