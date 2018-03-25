@@ -21,8 +21,8 @@ Example of 404 rejection:
 
 ```json
 {
-  status: 404,
-  statusText: 'Not Found'
+  "status": 404,
+  "statusText": "Not Found"
 }
 ```
 
@@ -30,8 +30,8 @@ If the fetch request times out the `JSON` object will be as follow:
 
 ```json
 {
-  status: 599,
-  statusText: 'Network Connect Timeout Error'
+  "status": 599,
+  "statusText": "Network Connect Timeout Error"
 }
 ```
 
