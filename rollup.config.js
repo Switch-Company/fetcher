@@ -10,14 +10,17 @@ const banner = `/**
  **/
 `;
 
+const [ filename ] = pkg.main.split( '/' ).reverse();
+const name = filename.replace( '.js', '' );
+
 export default {
-  input: 'lib/index.js',
+  input: pkg.module,
   output: {
     banner,
-    file: 'dist/fetch.js',
+    file: pkg.main,
     format: 'umd',
     indent: '  ',
-    name: 'Fetch'
+    name
   },
   plugins: [
     nodeResolve(),
