@@ -1,4 +1,4 @@
-# Switch - Fetchy
+# Switch - Fetcher
 
 Wrap the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) with convenience methods.
 
@@ -50,7 +50,7 @@ Default parameters can be changed using `fetch.config = {}`;
 
 ### `.get( url, parameters )`
 
-Execute a `GET` fetch to the `url` using the `parameters` provided.
+Execute a `GET` request to the `url` using the `parameters` provided.
 
 #### Parameters
 
@@ -61,7 +61,7 @@ A `data` object is avalaible to pass the query string.
 #### Creating a `GET` fetch
 
 ```js
-// fetch "/search?term=fetch"
+// create a 'GET' request to "/search?term=fetch"
 fetchy.get( '/search', {
   data: {
     term: 'fetch'
@@ -87,7 +87,7 @@ Shortcut to create a fetch request based on a form element. The request endpoint
 
 Non-strings fields value will be ignored when the from's method is set to `GET`.
 
-A `FormData` object will be send only when a non-string field value is found. By default form's data object is a `JSON`.
+A `FormData` object will be sent only when a non-string field value is found. By default the form's data object is a `JSON` object.
 
 #### Parameters
 
