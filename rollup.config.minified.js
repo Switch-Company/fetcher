@@ -1,7 +1,8 @@
+import pkg from './package.json';
 import config from './rollup.config.js';
 import uglify from 'rollup-plugin-uglify';
 
-config.output.file = 'dist/fetch.min.js';
+config.output.file = pkg.main.replace( '.js', '.min.js' );
 config.plugins.push( uglify({
   output: {
     'comments': ( node, comment ) => {

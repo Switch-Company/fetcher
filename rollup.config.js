@@ -1,4 +1,5 @@
 import pkg from './package.json';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
 const banner = `/**
@@ -19,6 +20,7 @@ export default {
     name: 'Fetch'
   },
   plugins: [
+    nodeResolve(),
     babel({
       exclude: 'node_modules/**'
     })

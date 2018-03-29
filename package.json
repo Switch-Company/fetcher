@@ -36,6 +36,10 @@
     "eslint-config-idiomatic": "^4.0.0",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "@switch-company/form-utils": "^1.0.0"
   }
 }
