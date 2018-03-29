@@ -1,21 +1,20 @@
 {
-  "name": "@switch-company/fetchy",
+  "name": "@switch-company/fetcher",
   "version": "0.0.0",
   "description": "Wrap the Fetch API with convinience methods.",
-  "main": "dist/fetch.js",
+  "main": "dist/fetcher.js",
   "module": "lib/index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
     "build": "rollup -c && rollup -c rollup.config.minified.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "version": "npm run test && npm run build && git add -A dist",
     "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Switch-Company/fetchy.git"
+    "url": "git@github.com:Switch-Company/fetcher.git"
   },
   "author": {
     "name": "Switch",
