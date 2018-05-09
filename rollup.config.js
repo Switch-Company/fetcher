@@ -1,6 +1,5 @@
 import pkg from './package.json';
 import nodeResolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
 
 const banner = `/**
  * ${pkg.name} - ${pkg.description}
@@ -23,9 +22,6 @@ export default {
     name
   },
   plugins: [
-    nodeResolve(),
-    babel({
-      exclude: 'node_modules/**'
-    })
+    nodeResolve()
   ]
 };

@@ -1,5 +1,5 @@
 /**
- * @switch-company/fetcher - Wrap the Fetch API with convinience methods.
+ * @switch-company/fetcher - Wrap the Fetch API with convenience methods.
  * @version v1.0.0
  * @link undefined
  * @license ISC

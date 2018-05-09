@@ -3,4 +3,4 @@ import get from './get';
 import post from './post';
 import form from './form';
 
-export default { get: get, post: post, form: form, config: config };
+export default { get, post, form, config };
