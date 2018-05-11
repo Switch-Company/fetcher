@@ -9,10 +9,16 @@
     "idiomatic"
   ],
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 2017
   },
   "rules": {
     "space-before-blocks": 0,
+    "space-before-function-paren": ["error", {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+    }],
     "keyword-spacing": 0,
     "one-var": 0,
     "func-names": 0,
