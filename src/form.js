@@ -6,7 +6,7 @@ import formUtils from '@switch-company/form-utils';
  * Get the form data and use fetch based on the action and method attributes
  * @param {HTMLFormElement} form - the form to submit asynchronously
  */
-function form( form, params = {}){
+function form( form, params = {}, shouldParse = true ){
   let callMethod = send;
 
   if( !params.method ){
@@ -30,7 +30,7 @@ function form( form, params = {}){
     params.data = formUtils.toJSON( form );
   }
 
-  return callMethod( form.action, params );
+  return callMethod( form.action, params, shouldParse );
 }
 
 export default form;

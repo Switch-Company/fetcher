@@ -1,12 +1,32 @@
 import config from './config';
 
+function createResponse( data, response ){
+  const { ok, redirected, status, statusText, type, url } = response;
+  const headers = {};
+
+  for( const [ name, value ] of response.headers.entries()){
+    headers[ name ] = value;
+  }
+
+  return {
+    headers,
+    ok,
+    redirected,
+    status,
+    statusText,
+    type,
+    url,
+    data
+  };
+}
+
 /**
  * do the fetch call
  * @param {string} url - url to fetch
  * @param {object} params - fetch paramerters object
  * @return {Promise} Promise object containing the formated response
  */
-function fetch( url, params = {}){
+function fetch( url, params = {}, shouldParse = true ){
   // merge params
   params = Object.assign({}, config.options, params );
 
@@ -19,11 +39,14 @@ function fetch( url, params = {}){
 
   // create a promise that can be rejected by the timeout
   return new Promise(( resolve, reject ) => {
+    let rejected = false;
     // fail when theres a timeout or not internet connection
-    const browserReject = function() {
+    const browserReject = error => {
+      rejected = true;
+
       reject({
-        status: 599,
-        statusText: 'Network Connect Timeout Error'
+        status: error ? null : 599,
+        statusText: error ? error.message : 'Network Connect Timeout Error'
       });
     };
 
@@ -32,6 +55,10 @@ function fetch( url, params = {}){
     // fetch the url and resolve or reject the current promise based on its resolution
     window.fetch( url, params )
       .then( res => {
+        if( rejected ){
+          return;
+        }
+
         resolve( res );
       })
       .catch( browserReject )
@@ -40,7 +67,7 @@ function fetch( url, params = {}){
       });
   })
     // check validity of the response
-    .then( response => pass( response, params ));
+    .then( response => pass( response, params, shouldParse ));
 }
 
 
@@ -50,50 +77,42 @@ function fetch( url, params = {}){
  * @param {object} params - param object used to trigger the call
  * @return {Promise} Promise object containing the formated response
  */
-function pass( response ) {
-  const contentType = response.headers.get( 'content-type' );
+function pass( response, params, shouldParse ) {
+  let contentType = response.headers.get( 'content-type' );
+  let parsing;
 
-  if( contentType.includes( 'application/json' )){
-    return response.json()
-      .then( data => {
-        if( !response.ok ){
-          return Promise.reject( data );
-        }
-
-        return data;
-      });
+  if( contentType ){
+    contentType = contentType.split( ';' )[ 0 ];
   }
 
-  if( contentType.includes( 'multipart/form-data' )){
-    return response.formData()
-      .then( data => {
-        if( !response.ok ){
-          return Promise.reject( data );
-        }
-
-        return data;
-      });
+  if( !shouldParse ){
+    return response;
   }
 
-  if( contentType.includes( 'application/octet-stream' )){
-    return response.blob()
-      .then( data => {
-        if( !response.ok ){
-          return Promise.reject( data );
-        }
-
-        return data;
-      });
+  switch( contentType ){
+    case 'application/json':
+      parsing = response.json();
+      break;
+    case 'multipart/form-data':
+      parsing = response.formData();
+      break;
+    case 'application/octet-stream':
+      parsing = response.blob();
+      break;
+    default:
+      parsing = response.text();
   }
 
-  if( response.ok ){
-    return response.text();
-  }
+  return parsing
+    .then( data => {
+      const formatedResponse = createResponse( data, response );
 
-  return Promise.reject({
-    status: response.status,
-    statusText: response.statusText
-  });
+      if( !response.ok ){
+        return Promise.reject( formatedResponse );
+      }
+
+      return formatedResponse;
+    });
 }
 
 export default fetch;

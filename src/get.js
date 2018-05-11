@@ -21,7 +21,7 @@ function queryfy( params ) {
  * @param {object} params - the fetch API param object
  * @return {promise} the fetch promise
  */
-function get( url, params = {}) {
+function get( url, params = {}, shouldParse = true ){
 
   params.method = 'get';
 
@@ -38,7 +38,7 @@ function get( url, params = {}) {
     delete params.data;
   }
 
-  return fetch( url, params );
+  return fetch( url, params, shouldParse );
 }
 
 export default get;
