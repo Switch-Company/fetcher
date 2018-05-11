@@ -360,7 +360,7 @@
       callMethod = get;
     }
 
-    if (formUtils.hasFile) {
+    if (formUtils.hasFile(form)) {
       if (!params.header) {
         params.header = {};
       }
