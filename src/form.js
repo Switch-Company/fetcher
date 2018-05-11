@@ -1,5 +1,5 @@
 import get from './get';
-import post from './post';
+import send from './send';
 import formUtils from '@switch-company/form-utils';
 
 /**
@@ -7,7 +7,7 @@ import formUtils from '@switch-company/form-utils';
  * @param {HTMLFormElement} form - the form to submit asynchronously
  */
 function form( form, params = {}){
-  let callMethod = post;
+  let callMethod = send;
 
   if( !params.method ){
     form.method = form.method;

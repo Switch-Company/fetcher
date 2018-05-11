@@ -69,9 +69,9 @@ fetchy.get( '/search', {
 });
 ```
 
-### `.post( url, parameters )`
+### `.send( url, parameters )`
 
-Execute a `POST` fetch to the `url` using the `parameters` provided.
+Send data to the `url` using the `parameters` provided. Method defaults to `POST`.
 
 #### Parameters
 

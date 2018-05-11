@@ -1,6 +1,6 @@
 import config from './config';
 import get from './get';
-import post from './post';
+import send from './send';
 import form from './form';
 
-export default { get, post, form, config };
+export default { get, send, form, config };
