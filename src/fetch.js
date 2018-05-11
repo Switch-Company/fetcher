@@ -8,7 +8,7 @@ import config from './config';
  */
 function fetch( url, params = {}){
   // merge params
-  params = Object.assign({}, config.params, params );
+  params = Object.assign({}, config.options, params );
 
   if( !params.headers ){
     params.headers = {};
