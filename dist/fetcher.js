@@ -241,7 +241,7 @@
     params.method = 'get';
 
     if (params.data) {
-      var search = url.split['?'][1];
+      var search = url.split('?')[1];
 
       if (search) {
         url += '&' + queryfy(params.data);

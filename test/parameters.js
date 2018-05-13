@@ -141,3 +141,44 @@ test( 'Response is well formated when not parsed', async t => {
 
   t.end();
 });
+
+test( 'Get call while passing data create a well formated url', async t => {
+  let match = 'url?test1=test&test2=test';
+
+  const [ browser, page ] = await createBrowser();
+
+  await page.exposeFunction( 'tape', url => {
+    t.same( url, match, `Url matches «${match}»` );
+  });
+
+  await page.evaluate(() => {
+    return window.fetcher.get( 'url', {
+      data: {
+        test1: 'test',
+        test2: 'test'
+      }
+    }).catch( e => e );
+  });
+
+  await page.evaluate(() => {
+    return window.fetcher.get( 'url?test1=test', {
+      data: {
+        test2: 'test'
+      }
+    }).catch( e => e );
+  });
+
+  match = 'url?test1=test&test2=test&test2=testtest';
+
+  await page.evaluate(() => {
+    return window.fetcher.get( 'url?test1=test', {
+      data: {
+        test2: [ 'test', 'testtest' ]
+      }
+    }).catch( e => e );
+  });
+
+  await browser.close();
+
+  t.end();
+});
