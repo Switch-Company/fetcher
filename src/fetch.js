@@ -78,15 +78,15 @@ function fetch( url, params = {}, shouldParse = true ){
  * @return {Promise} Promise object containing the formated response
  */
 function pass( response, params, shouldParse ) {
+  if( !shouldParse ){
+    return response;
+  }
+
   let contentType = response.headers.get( 'content-type' );
   let parsing;
 
   if( contentType ){
     contentType = contentType.split( ';' )[ 0 ];
-  }
-
-  if( !shouldParse ){
-    return response;
   }
 
   switch( contentType ){
