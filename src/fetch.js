@@ -45,8 +45,9 @@ function fetch( url, params = {}, shouldParse = true ){
       rejected = true;
 
       reject({
-        status: error ? null : 599,
-        statusText: error ? error.message : 'Network Connect Timeout Error'
+        status: error ? 0 : 599,
+        statusText: error ? error.message : 'Network Connect Timeout Error',
+        url
       });
     };
 

@@ -48,8 +48,8 @@ const createBrowser = async () => {
 };
 
 test( 'Request fails to fetch', async t => {
-  const match = null;
-  const entries = [ 'status', 'statusText' ];
+  const match = 0;
+  const entries = [ 'status', 'statusText', 'url' ];
 
   const [ browser, page ] = await createBrowser();
 
@@ -63,6 +63,7 @@ test( 'Request fails to fetch', async t => {
 
   t.same( Object.keys( result ).length, entries.length, `Response has only ${entries.length} entries` );
   t.same( result.status, match, `Response status matches «${match}»` );
+  t.same( result.url, url, `Response url matches «${url}»` );
 
   await browser.close();
 
@@ -72,7 +73,7 @@ test( 'Request fails to fetch', async t => {
 test( 'Request times out', async t => {
   const match = 599;
   const method = 'GET';
-  const entries = [ 'status', 'statusText' ];
+  const entries = [ 'status', 'statusText', 'url' ];
 
   const server = await createServer(( req, res ) => {
     t.same( req.method, method, `Method is ${method}` );
@@ -96,6 +97,7 @@ test( 'Request times out', async t => {
 
   t.same( Object.keys( result ).length, entries.length, `Response has only ${entries.length} entries` );
   t.same( result.status, match, `Response status matches «${match}»` );
+  t.same( result.url, url, `Response url matches «${url}»` );
 
   await browser.close();
   await server.close();
