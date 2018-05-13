@@ -8,9 +8,14 @@ import formUtils from '@switch-company/form-utils';
  */
 function form( form, params = {}, shouldParse = true ){
   let callMethod = send;
+  const contentType = form.enctype;
 
-  if( !params.method ){
-    form.method = form.method;
+  if( form.method && !params.method ){
+    params.method = form.method;
+  }
+
+  if( contentType && !params.header ){
+    params.header[ 'Content-Type' ] = contentType;
   }
 
   if( params.method === 'get' ){
