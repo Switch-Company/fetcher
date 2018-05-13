@@ -103,8 +103,9 @@
         rejected = true;
 
         reject({
-          status: error ? null : 599,
-          statusText: error ? error.message : 'Network Connect Timeout Error'
+          status: error ? 0 : 599,
+          statusText: error ? error.message : 'Network Connect Timeout Error',
+          url: url
         });
       };
 
@@ -134,15 +135,15 @@
    * @return {Promise} Promise object containing the formated response
    */
   function pass(response, params, shouldParse) {
+    if (!shouldParse) {
+      return response;
+    }
+
     var contentType = response.headers.get('content-type');
     var parsing = void 0;
 
     if (contentType) {
       contentType = contentType.split(';')[0];
-    }
-
-    if (!shouldParse) {
-      return response;
     }
 
     switch (contentType) {
@@ -351,9 +352,14 @@
     var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
     var callMethod = send;
+    var contentType = form.enctype;
 
-    if (!params.method) {
-      form.method = form.method;
+    if (form.method && !params.method) {
+      params.method = form.method;
+    }
+
+    if (contentType && !params.header) {
+      params.header['Content-Type'] = contentType;
     }
 
     if (params.method === 'get') {
