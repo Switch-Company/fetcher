@@ -5,10 +5,10 @@
   "main": "dist/fetcher.js",
   "module": "lib/index.js",
   "directories": {
-    "lib": "src"
+    "lib": "lib"
   },
   "scripts": {
-    "build": "babel src -d lib && rollup -c && rollup -c rollup.config.minified.js",
+    "build": "rollup -c && cross-env NODE_ENV=production rollup -c",
     "test": "tape test/*.js | tap-diff",
     "version": "npm run test && npm run build && git add -A dist",
     "postversion": "git push && git push --tags",
@@ -24,6 +24,7 @@
     "email": "bonjour@switch.paris",
     "url": "http://switch.paris"
   },
+  "homepage": "https://www.npmjs.com/package/@switch-company/fetcher",
   "license": "ISC",
   "browserslist": [
     "> 1%",
@@ -31,13 +32,16 @@
     "IE 10"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "busboy": "^0.2.14",
+    "cross-env": "^5.1.5",
     "eslint": "^4.19.1",
     "eslint-config-idiomatic": "^4.0.0",
     "puppeteer": "^1.4.0",
     "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",
     "tap-diff": "^0.1.1",
