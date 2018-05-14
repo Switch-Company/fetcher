@@ -144,11 +144,24 @@ test( 'Response is well formated when not parsed', async t => {
 
 test( 'Get call while passing data create a well formated url', async t => {
   let match = 'url?test1=test&test2=test';
+  let index = 0;
 
   const [ browser, page ] = await createBrowser();
 
   await page.exposeFunction( 'tape', url => {
-    t.same( url, match, `Url matches «${match}»` );
+    switch( index ){
+      case 0:
+        t.same( url, match, `Query is created with the parameters «${match}»` );
+        break;
+      case 1:
+        t.same( url, match, `Parameters are added to the current query «${match}»` );
+        break;
+      case 2:
+        t.same( url, match, `Array parameters are added to the query «${match}»` );
+        break;
+    }
+
+    index++;
   });
 
   await page.evaluate(() => {
