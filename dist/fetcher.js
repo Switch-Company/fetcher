@@ -65,6 +65,12 @@
     };
   }();
 
+  /**
+   * create a custom response object based on the fetch response object
+   * @param {*} data - data parsed by the pass method
+   * @param {object} response - fetch response object
+   * @return {object} custom response object
+   */
   function createResponse(data, response) {
     var ok = response.ok,
         redirected = response.redirected,
