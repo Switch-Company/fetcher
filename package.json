@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rollup -c && cross-env NODE_ENV=production rollup -c",
     "test": "tape test/*.js | tap-diff",
-    "version": "npm run test && npm run build && git add -A dist",
+    "version": "npm run build && npm run test && git add -A dist",
     "postversion": "git push && git push --tags",
     "watch:build": "watch 'npm run build' lib --interval=1",
     "watch:test": "watch 'npm test' {dist,test} --interval=1"
