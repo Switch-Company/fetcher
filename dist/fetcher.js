@@ -15,7 +15,7 @@
     headers: {
       'X-Requested-With': 'XMLHttpRequest'
     },
-    options: {
+    params: {
       credentials: 'same-origin'
     },
     timeout: 30000
@@ -121,14 +121,15 @@
    * do the fetch call
    * @param {string} url - url to fetch
    * @param {object} params - fetch paramerters object
+   * @param {object} options - one time configuration of the fetch request
    * @return {Promise} Promise object containing the formated response
    */
   function fetch(url) {
     var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     // merge params
-    params = Object.assign({}, config.options, params);
+    params = Object.assign({}, config.params, params);
 
     if (!params.headers) {
       params.headers = {};
@@ -151,7 +152,7 @@
         });
       };
 
-      var timeout = window.setTimeout(browserReject, config.timeout);
+      var timeout = window.setTimeout(browserReject, options.timeout || config.timeout);
 
       // fetch the url and resolve or reject the current promise based on its resolution
       window.fetch(url, params).then(function (res) {
@@ -166,7 +167,7 @@
     })
     // check validity of the response
     .then(function (response) {
-      return pass(response, params, shouldParse);
+      return pass(response, params, options.parse);
     });
   }
 
@@ -176,7 +177,9 @@
    * @param {object} params - param object used to trigger the call
    * @return {Promise} Promise object containing the formated response
    */
-  function pass(response, params, shouldParse) {
+  function pass(response, params) {
+    var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
     if (!shouldParse) {
       return response;
     }
@@ -231,11 +234,12 @@
    * GET
    * @param {string} url -the url to fetch
    * @param {object} params - the fetch API param object
+   * @param {object} options - one time configuration of the fetch request
    * @return {promise} the fetch promise
    */
   function get$1(url) {
     var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 
     params.method = 'get';
@@ -252,18 +256,19 @@
       delete params.data;
     }
 
-    return fetch(url, params, shouldParse);
+    return fetch(url, params, options);
   }
 
   /**
    * SEND
    * @param {string} url -the url to fetch
    * @param {object} params - the fetch API param object
+   * @param {object} options - one time configuration of the fetch request
    * @return {promise} the fetch promise
    */
   function send(url) {
     var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     // const multipart = params.headers && params.headers[ 'Content-Type' ] && params.headers[ 'Content-Type' ].toLowerCase().indexOf( 'multipart/form-data' ) > -1;
 
@@ -317,7 +322,7 @@
       delete params.data;
     }
 
-    return fetch(url, params, shouldParse);
+    return fetch(url, params, options);
   }
 
   function toJSON(form) {
@@ -413,10 +418,13 @@
   /**
    * Get the form data and use fetch based on the action and method attributes
    * @param {HTMLFormElement} form - the form to submit asynchronously
+   * @param {object} params - the fetch API param object
+   * @param {object} options - one time configuration of the fetch request
+   * @return {Promise} Promise object containing the formated response
    */
   function form(form) {
     var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var shouldParse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var callMethod = send;
     var contentType = form.enctype;
@@ -445,7 +453,7 @@
       params.data = formUtils.toJSON(form);
     }
 
-    return callMethod(form.action, params, shouldParse);
+    return callMethod(form.action, params, options);
   }
 
   var index = { get: get$1, send: send, form: form, config: config };

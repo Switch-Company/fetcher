@@ -130,7 +130,9 @@ test( 'Response is well formated when not parsed', async t => {
   const [ browser, page ] = await createBrowser();
 
   const result = await page.evaluate(() => {
-    return window.fetcher.get( 'url', {}, false ).catch( e => e );
+    return window.fetcher.get( 'url', {}, {
+      parse: false
+    }).catch( e => e );
   }, match );
 
   t.same( typeof result, 'object', 'Response is an object' );

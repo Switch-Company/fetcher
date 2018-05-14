@@ -8,7 +8,7 @@ Methods `get`, `send`, `form` returns a promise that will resolve or reject with
 
 The structure of the response's object uses the same structure  the [response interface](https://developer.mozilla.org/en-US/docs/Web/API/Response) properties of a fetch request.
 
-Structure of a fetch response object
+Structure of a fetch response object:
 
 ```js
 {
@@ -23,7 +23,7 @@ Structure of a fetch response object
   }
 ```
 
-The `headers` entry returns an object containing the headers received by the server. You can access them by using their names like `headers[ 'content-type' ]`. Headers are in lower case.
+The `headers` entry returns an object containing the headers received by the server. You can access them by using their names like `headers[ 'content-type' ]`. Headers are in lowercase.
 
 Depending of the response's `Content-Type` header the data structure of returned value will be different:
 
@@ -62,13 +62,13 @@ Default parameters can be changed using `fetch.config = {}`;
 ### Default parameters
 
 * `headers` - default headers to send. Any headers set when making a request will overide the default headers
-* `options` - standard [fetch api request properties](https://developer.mozilla.org/en-US/docs/Web/API/Request#Properties) minus the `header` entry - defaults to `{ credentials: 'same-origin' }`
+* `params` - standard [fetch api request properties](https://developer.mozilla.org/en-US/docs/Web/API/Request#Properties) minus the `header` entry - defaults to `{ credentials: 'same-origin' }`
 * `timeout` - duration in milliseconds before the request is considered timed out - defaults to `30000`
 
 
 ## Methods
 
-### `.get( url, parameters )`
+### `.get( url, parameters, fetchOptions )`
 
 Execute a `GET` request to the `url` using the `parameters` provided.
 
@@ -77,6 +77,14 @@ Execute a `GET` request to the `url` using the `parameters` provided.
 Parameters are any parameter provided by the [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Request#Properties).
 
 A `data` object is avalaible to pass the query string.
+
+#### fetchOptions
+
+Fetcher specific options for the current request (optional).
+
+* `parse` - if `false`, the request will not be parsed by fetcher and will return the fetch [response object](https://developer.mozilla.org/en-US/docs/Web/API/Response) (defaults to `true`)
+* `timeout` - specific timeout for the current request (in milliseconds)
+
 
 #### Creating a `GET` fetch
 
@@ -89,7 +97,7 @@ fetchy.get( '/search', {
 });
 ```
 
-### `.send( url, parameters )`
+### `.send( url, parameters, fetchOptions )`
 
 Send data to the `url` using the `parameters` provided. Method defaults to `POST`.
 
@@ -101,7 +109,14 @@ A `data` object is avalaible to pass a `JSON`, a `Blob` or a [`FormData`](https:
 
 In order to `POST` a `FormData` object, the request's `Content-Type` must be set to `multipart/form-data`.
 
-### `.form( HTMLFormElement, parameters )`
+#### fetchOptions
+
+Fetcher specific options for the current request (optional).
+
+* `parse` - if `false`, the request will not be parsed by fetcher and will return the fetch [response object](https://developer.mozilla.org/en-US/docs/Web/API/Response) (defaults to `true`)
+* `timeout` - specific timeout for the current request (in milliseconds)
+
+### `.form( HTMLFormElement, parameters, fetchOptions )`
 
 Shortcut to create a fetch request based on a form element. The request endpoint and method are based on the form's `action` and `method` attributes. Entries in the parameters object overwrite the form's attribute when fetching.
 
@@ -112,3 +127,10 @@ A `FormData` object will be sent only when a non-string field value is found. By
 #### Parameters
 
 Parameters are any parameter provided by the [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Request#Properties).
+
+#### fetchOptions
+
+Fetcher specific options for the current request (optional).
+
+* `parse` - if `false`, the request will not be parsed by fetcher and will return the fetch [response object](https://developer.mozilla.org/en-US/docs/Web/API/Response) (defaults to `true`)
+* `timeout` - specific timeout for the current request (in milliseconds)
