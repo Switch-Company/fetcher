@@ -1,6 +1,6 @@
 /**
  * @switch-company/fetcher - Wrap the Fetch API with convenience methods.
- * @version v2.0.0
+ * @version v2.0.1
  * @link https://www.npmjs.com/package/@switch-company/fetcher
  * @license ISC
  **/
@@ -435,11 +435,15 @@
     var callMethod = send;
     var contentType = form.enctype;
 
+    if (!params.header) {
+      params.header = {};
+    }
+
     if (form.method && !params.method) {
       params.method = form.method;
     }
 
-    if (contentType && !params.header) {
+    if (contentType && !params.header['Content-Type']) {
       params.header['Content-Type'] = contentType;
     }
 
