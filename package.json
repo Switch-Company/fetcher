@@ -1,6 +1,6 @@
 {
   "name": "@switch-company/fetcher",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Wrap the Fetch API with convenience methods.",
   "main": "dist/fetcher.js",
   "module": "lib/index.js",

@@ -1,6 +1,6 @@
 /**
  * @switch-company/fetcher - Wrap the Fetch API with convenience methods.
- * @version v2.0.1
+ * @version v2.0.2
  * @link https://www.npmjs.com/package/@switch-company/fetcher
  * @license ISC
  **/
